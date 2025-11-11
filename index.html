@@ -304,7 +304,7 @@
 
         <input type="text" id="eventName" class="event-input" placeholder="Event Name (e.g., Beach Trip!)">
 
-        <button class="save-btn" onclick="saveData()">💾 Save Progress</button>
+        <button class="save-btn" onclick="saveData()">☁️ Auto-Saving to Cloud!</button>
 
         <div class="section">
             <h2>Add a Car 🚗</h2>
@@ -334,20 +334,47 @@
 
     <div class="dancing-cookie">🍪</div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAvrgOMpVvBLdwBxB4jC2Wo0y5A770Sx40",
+            authDomain: "carbooler.firebaseapp.com",
+            databaseURL: "https://carbooler-default-rtdb.firebaseio.com/",
+            projectId: "carbooler",
+            storageBucket: "carbooler.firebasestorage.app",
+            messagingSenderId: "77908116123",
+            appId: "1:77908116123:web:9a95e4703ba68ace8d3c3e",
+            measurementId: "G-Q18PEXLHS4"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const dbRef = database.ref('carpoolData');
+
         let cars = [];
         let unassignedPassengers = [];
         let selectedEmoji = '🚙';
+        let isLoadingFromFirebase = false;
 
-        // Auto-save function
+        // Auto-save function - now saves to Firebase!
         function autoSave() {
+            if (isLoadingFromFirebase) return; // Don't save while loading from Firebase
+
             const eventName = document.getElementById('eventName').value;
             const data = {
                 eventName: eventName,
                 cars: cars,
                 unassignedPassengers: unassignedPassengers
             };
-            localStorage.setItem('carpoolData', JSON.stringify(data));
+
+            // Save to Firebase instead of localStorage
+            dbRef.set(data).catch(error => {
+                console.error('Error saving to Firebase:', error);
+            });
         }
 
         function addCar() {
@@ -531,7 +558,7 @@
             }
         }
 
-        // Save and load functions
+        // Save and load functions - now using Firebase!
         function saveData() {
             const eventName = document.getElementById('eventName').value;
             const data = {
@@ -539,20 +566,30 @@
                 cars: cars,
                 unassignedPassengers: unassignedPassengers
             };
-            localStorage.setItem('carpoolData', JSON.stringify(data));
-            alert('Progress saved! 💾');
+            dbRef.set(data).then(() => {
+                alert('Progress saved to cloud! 💾☁️');
+            }).catch(error => {
+                alert('Error saving: ' + error.message);
+            });
         }
 
         function loadData() {
-            const saved = localStorage.getItem('carpoolData');
-            if (saved) {
-                const data = JSON.parse(saved);
-                document.getElementById('eventName').value = data.eventName || '';
-                cars = data.cars || [];
-                unassignedPassengers = data.unassignedPassengers || [];
-                renderCars();
-                renderUnassigned();
-            }
+            // Real-time listener - updates whenever anyone makes a change!
+            dbRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    isLoadingFromFirebase = true;
+
+                    document.getElementById('eventName').value = data.eventName || '';
+                    cars = data.cars || [];
+                    unassignedPassengers = data.unassignedPassengers || [];
+
+                    renderCars();
+                    renderUnassigned();
+
+                    isLoadingFromFirebase = false;
+                }
+            });
         }
 
         // Add auto-save to event name input
