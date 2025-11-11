@@ -364,6 +364,8 @@
         function autoSave() {
             if (isLoadingFromFirebase) return; // Don't save while loading from Firebase
 
+            isLoadingFromFirebase = true; // Prevent listener from overwriting while we save
+
             const eventName = document.getElementById('eventName').value;
             const data = {
                 eventName: eventName,
@@ -372,8 +374,14 @@
             };
 
             // Save to Firebase instead of localStorage
-            dbRef.set(data).catch(error => {
+            dbRef.set(data).then(() => {
+                // Wait a bit before allowing listener to update again
+                setTimeout(() => {
+                    isLoadingFromFirebase = false;
+                }, 100);
+            }).catch(error => {
                 console.error('Error saving to Firebase:', error);
+                isLoadingFromFirebase = false;
             });
         }
 
