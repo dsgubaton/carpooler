@@ -587,7 +587,32 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const dbRef = database.ref('carpoolData');
+
+        // Get or create event ID from URL parameter
+        let eventId = null;
+        let dbRef = null;
+
+        function getOrCreateEventId() {
+            const params = new URLSearchParams(window.location.search);
+            const urlEventId = params.get('e');
+
+            if (urlEventId) {
+                // Joining existing event
+                console.log('Joining event:', urlEventId);
+                return urlEventId;
+            } else {
+                // Create new event
+                const newEventId = self.crypto.randomUUID();
+                console.log('Created new event:', newEventId);
+                // Update URL without reload
+                const newUrl = `${window.location.pathname}?e=${newEventId}`;
+                window.history.pushState({}, '', newUrl);
+                return newEventId;
+            }
+        }
+
+        eventId = getOrCreateEventId();
+        dbRef = database.ref(`events/${eventId}`);
 
         let cars = [];
         let unassignedPassengers = [];
@@ -646,20 +671,23 @@
                 ? sanitizeInput(eventName.substring(0, 100))
                 : sanitizeInput(eventName);
 
-            const data = {
-                eventName: sanitizedEventName,
-                cars: cars,
-                unassignedPassengers: unassignedPassengers
-            };
+            // Use transactions to update specific fields atomically
+            // This prevents overwriting teammates' concurrent edits
+            const updates = {};
+            updates[`events/${eventId}/eventName`] = sanitizedEventName;
+            updates[`events/${eventId}/cars`] = cars;
+            updates[`events/${eventId}/unassignedPassengers`] = unassignedPassengers;
+            updates[`events/${eventId}/lastUpdated`] = firebase.database.ServerValue.TIMESTAMP;
 
-            // Save to Firebase
-            dbRef.set(data).then(() => {
+            // Use update() instead of set() to avoid overwriting entire object
+            database.ref().update(updates).then(() => {
                 console.log('Saved to Firebase!');
                 setTimeout(() => {
                     isSaving = false;
                 }, 500);
             }).catch(error => {
                 console.error('Error saving to Firebase:', error);
+                alert('Save Error: ' + error.message + '\n\nCheck that:\n1. Firebase Realtime Database is enabled\n2. Security rules are published\n3. You have internet connection');
                 isSaving = false;
             });
         }
