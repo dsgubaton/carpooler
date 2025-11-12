@@ -500,8 +500,6 @@
 
         <input type="text" id="eventName" class="event-input" placeholder="Event Name (e.g., Beach Trip!)">
 
-        <button class="save-btn" onclick="saveData()">☁️ Auto-Saving to Cloud!</button>
-
         <button class="clear-btn" onclick="clearEverything()">🧹 Clear Everything</button>
 
         <div class="section">
@@ -895,21 +893,6 @@
                 assignPassenger(selectedPassengerId, carId);
                 selectedPassengerId = null;
             }
-        }
-
-        // Save and load functions - now using Firebase!
-        function saveData() {
-            const eventName = document.getElementById('eventName').value;
-            const data = {
-                eventName: eventName,
-                cars: cars,
-                unassignedPassengers: unassignedPassengers
-            };
-            dbRef.set(data).then(() => {
-                alert('Progress saved to cloud! 💾☁️');
-            }).catch(error => {
-                alert('Error saving: ' + error.message);
-            });
         }
 
         // Clear everything function
