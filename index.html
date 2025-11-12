@@ -597,17 +597,13 @@
             const urlEventId = params.get('e');
 
             if (urlEventId) {
-                // Joining existing event
+                // Joining specific event from URL
                 console.log('Joining event:', urlEventId);
                 return urlEventId;
             } else {
-                // Create new event
-                const newEventId = self.crypto.randomUUID();
-                console.log('Created new event:', newEventId);
-                // Update URL without reload
-                const newUrl = `${window.location.pathname}?e=${newEventId}`;
-                window.history.pushState({}, '', newUrl);
-                return newEventId;
+                // Use default shared event - everyone accessing base URL sees same data
+                console.log('Using default shared event');
+                return 'default';
             }
         }
 
