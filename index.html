@@ -276,20 +276,12 @@
             border-radius: 15px;
             font-size: 1.2em;
             font-weight: bold;
-            cursor: pointer;
+            cursor: default;
             width: 100%;
             margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: all 0.3s;
-        }
-
-        .save-btn:hover {
-            background: #45a049;
-            transform: scale(1.02);
-        }
-
-        .save-btn:active {
-            transform: scale(0.98);
+            pointer-events: none;
         }
 
         .clear-btn {
@@ -777,7 +769,7 @@
 
         <input type="text" id="eventName" class="event-input" placeholder="Event Name (e.g., Beach Trip!)">
 
-        <button class="save-btn" onclick="saveData()">☁️ Auto-Saving to Cloud!</button>
+        <button class="save-btn" id="saveStatus">✅ Auto-Saved</button>
 
         <button class="share-btn" onclick="shareEvent()">🔗 Share Event Link</button>
 
@@ -1182,6 +1174,12 @@
 
             isSaving = true;
 
+            // Update status button
+            const saveBtn = document.getElementById('saveStatus');
+            if (saveBtn) {
+                saveBtn.textContent = '💾 Saving...';
+            }
+
             const eventName = document.getElementById('eventName').value.trim();
 
             // Security: Sanitize and limit event name length
@@ -1200,11 +1198,17 @@
             // Use update() instead of set() to avoid overwriting entire object
             database.ref().update(updates).then(() => {
                 console.log('Saved to Firebase!');
+                if (saveBtn) {
+                    saveBtn.textContent = '✅ Auto-Saved';
+                }
                 setTimeout(() => {
                     isSaving = false;
                 }, 500);
             }).catch(error => {
                 console.error('Error saving to Firebase:', error);
+                if (saveBtn) {
+                    saveBtn.textContent = '❌ Save Error';
+                }
                 isSaving = false;
             });
         }
