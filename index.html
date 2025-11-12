@@ -56,7 +56,7 @@
         }
 
         h2 {
-            color: #667eea;
+            color: #5047c7;
             margin-bottom: 15px;
             font-size: 1.8em;
         }
@@ -70,7 +70,7 @@
 
         input, button {
             padding: 12px;
-            border: 2px solid #667eea;
+            border: 2px solid #5047c7;
             border-radius: 10px;
             font-size: 16px;
             font-family: inherit;
@@ -82,7 +82,7 @@
         }
 
         button {
-            background: #667eea;
+            background: #5047c7;
             color: white;
             cursor: pointer;
             font-weight: bold;
@@ -90,7 +90,7 @@
         }
 
         button:hover {
-            background: #764ba2;
+            background: #6c50b8;
             transform: scale(1.05);
         }
 
@@ -111,6 +111,43 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+        }
+
+        .seat-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .seat-badge.warning {
+            background: #f59e0b;
+            color: #1a1a1a;
+        }
+
+        .seat-badge.full {
+            background: #dc2f02;
+            color: white;
+        }
+
+        .seat-meter {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .seat-meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5047c7, #6c50b8);
+            transition: width 0.3s ease;
         }
 
         .car-visual {
@@ -142,7 +179,7 @@
         }
 
         .passenger-tag {
-            background: #667eea;
+            background: #5047c7;
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
@@ -155,7 +192,7 @@
         }
 
         .passenger-tag:hover {
-            background: #764ba2;
+            background: #6c50b8;
             transform: scale(1.05);
         }
 
@@ -173,7 +210,7 @@
         }
 
         .unassigned-tag {
-            background: #ff6b6b;
+            background: #dc2f02;
             color: white;
             padding: 10px 18px;
             border-radius: 20px;
@@ -186,7 +223,7 @@
         }
 
         .unassigned-tag:hover {
-            background: #ee5a52;
+            background: #c42503;
             transform: scale(1.05);
         }
 
@@ -210,7 +247,7 @@
         }
 
         .editable-seats:hover {
-            color: #667eea;
+            color: #5047c7;
             font-weight: bold;
         }
 
@@ -224,7 +261,7 @@
             background: rgba(255,255,255,0.75);
             margin-bottom: 20px;
             font-weight: bold;
-            color: #667eea;
+            color: #5047c7;
         }
 
         .event-input::placeholder {
@@ -256,7 +293,7 @@
         }
 
         .clear-btn {
-            background: rgba(255, 107, 107, 0.9);
+            background: rgba(220, 47, 2, 0.9);
             color: white;
             padding: 12px 25px;
             border: none;
@@ -276,6 +313,29 @@
         }
 
         .clear-btn:active {
+            transform: scale(0.98);
+        }
+
+        .share-btn {
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .share-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.02);
+        }
+
+        .share-btn:active {
             transform: scale(0.98);
         }
 
@@ -302,7 +362,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: #ff6b6b;
+            background: #dc2f02;
             color: white;
             border: none;
             border-radius: 50%;
@@ -329,7 +389,7 @@
             }
         }
 
-        /* Game Boy Tetris Styles */
+        /* Game Boy BLOCKS Styles */
         .gameboy-overlay {
             display: none;
             position: fixed;
@@ -362,7 +422,7 @@
             box-shadow: inset 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .tetris-canvas {
+        .blocks-canvas {
             display: block;
             background: #0f380f;
             border: 3px solid #306230;
@@ -386,7 +446,7 @@
             font-size: 14px;
         }
 
-        .close-tetris {
+        .close-blocks {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -401,8 +461,8 @@
             font-weight: bold;
         }
 
-        /* TETRIS letter reveal */
-        .tetris-reveal {
+        /* BLOCKS letter reveal */
+        .blocks-reveal {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -486,21 +546,240 @@
             50% { transform: translateX(-50%) scale(1.05); }
         }
 
+        .cost-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-row label {
+            font-weight: 600;
+            color: #333;
+            min-width: 140px;
+        }
+
+        .input-row input[type="number"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #5047c7;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #5047c7, #6c50b8);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cost-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #5047c7;
+        }
+
+        .cost-summary h3 {
+            margin-bottom: 15px;
+            color: #5047c7;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            font-size: 1.05em;
+        }
+
+        .cost-item strong {
+            color: #333;
+        }
+
+        .cost-item .amount {
+            color: #5047c7;
+            font-weight: bold;
+        }
+
+        .payment-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .payment-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .payment-btn.venmo {
+            background: #3D95CE;
+            color: white;
+        }
+
+        .payment-btn.paypal {
+            background: #0070BA;
+            color: white;
+        }
+
+        .payment-btn.cashapp {
+            background: #00A825;
+            color: white;
+        }
+
+        .payment-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Undo Snackbar */
+        .snackbar {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #323232;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: bottom 0.3s ease;
+            min-width: 300px;
+            max-width: 90%;
+        }
+
+        .snackbar.show {
+            bottom: 24px;
+        }
+
+        .snackbar-message {
+            flex: 1;
+            font-size: 0.95em;
+        }
+
+        .snackbar-action {
+            background: #5047c7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .snackbar-action:hover {
+            background: #6c50b8;
+        }
+
+        /* Drag and Drop */
+        .dragging {
+            opacity: 0.5;
+            cursor: grabbing !important;
+        }
+
+        .drag-over {
+            background: rgba(80, 71, 199, 0.1);
+            border: 3px dashed #5047c7;
+        }
+
+        .car-card.drag-over {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(80, 71, 199, 0.3);
+        }
+
         @media (max-width: 768px) {
             .mobile-controls {
                 display: flex;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .input-row label {
+                min-width: auto;
+            }
+
+            .input-row input[type="number"] {
+                width: 100%;
+            }
+        }
+
+        /* Accessibility: Respect user's motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            body {
+                animation: none !important;
+                background: #5047c7; /* Static gradient fallback */
+            }
+
+            .dancing-cookie {
+                display: none !important; /* Hide dancing cookie */
+            }
+
+            .car-visual {
+                animation: none !important;
+            }
+
+            .gameboy {
+                animation: none !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚗 CarBOOl Splitter 🚙</h1>
+        <h1>🚗 Carpool Splitter 🚙</h1>
         <p class="subtitle">Who's riding with who?! 🤪</p>
 
         <input type="text" id="eventName" class="event-input" placeholder="Event Name (e.g., Beach Trip!)">
 
         <button class="save-btn" onclick="saveData()">☁️ Auto-Saving to Cloud!</button>
+
+        <button class="share-btn" onclick="shareEvent()">🔗 Share Event Link</button>
 
         <button class="clear-btn" onclick="clearEverything()">🧹 Clear Everything</button>
 
@@ -520,7 +799,7 @@
                 <button onclick="addPassenger()">Add Friend</button>
             </div>
 
-            <h3 style="margin-top: 20px; color: #ff6b6b;">Unassigned Friends:</h3>
+            <h3 style="margin-top: 20px; color: #dc2f02;">Unassigned Friends:</h3>
             <div class="unassigned-passengers" id="unassignedList"></div>
         </div>
 
@@ -528,23 +807,69 @@
             <h2>Carpool Lineup ✅</h2>
             <div class="cars-container" id="carsContainer"></div>
         </div>
+
+        <div class="section" id="costSection" style="display: none;">
+            <h2>💸 Trip Cost Splitter</h2>
+            <p style="margin-bottom: 15px; color: #666;">Calculate and split costs fairly among passengers</p>
+
+            <div class="cost-inputs">
+                <div class="input-row">
+                    <label>Total Miles:</label>
+                    <input type="number" id="totalMiles" placeholder="0" min="0" step="0.1">
+                </div>
+                <div class="input-row">
+                    <label>Gas Price ($/gal):</label>
+                    <input type="number" id="gasPrice" placeholder="3.50" min="0" step="0.01">
+                </div>
+                <div class="input-row">
+                    <label>MPG:</label>
+                    <input type="number" id="mpg" placeholder="25" min="1" step="0.1">
+                </div>
+                <div class="input-row">
+                    <label>Tolls/Parking ($):</label>
+                    <input type="number" id="tolls" placeholder="0" min="0" step="0.01">
+                </div>
+                <div class="input-row">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="driverPaysZero" checked>
+                        Driver pays 0%
+                    </label>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateCosts()">Calculate Split</button>
+
+            <div id="costResults" style="display: none; margin-top: 20px;">
+                <div class="cost-summary">
+                    <h3>💰 Cost Breakdown</h3>
+                    <div id="costBreakdown"></div>
+                </div>
+
+                <button class="share-btn" onclick="shareCosts()" style="margin-top: 15px;">📋 Share/Export Costs</button>
+
+                <div id="paymentLinks" style="margin-top: 15px; display: none;">
+                    <h4>Quick Payment Links:</h4>
+                    <div class="payment-buttons" id="paymentButtons"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="dancing-cookie">🍪</div>
+    <div class="dancing-cookie" aria-label="Bonus cookie" role="img">🍪</div>
 
-    <!-- TETRIS Letter Reveal -->
-    <div class="tetris-reveal" id="tetrisReveal"></div>
+    <!-- BLOCKS Letter Reveal -->
+    <div class="blocks-reveal" id="blocksReveal"></div>
 
-    <!-- Game Boy Tetris Easter Egg -->
-    <div class="gameboy-overlay" id="tetrisOverlay">
+    <!-- Game Boy BLOCKS Easter Egg -->
+    <div class="gameboy-overlay" id="blocksOverlay">
         <div class="gameboy">
-            <button class="close-tetris" onclick="closeTetris()">×</button>
+            <button class="close-blocks" onclick="closeBlocks()">×</button>
             <div class="gameboy-screen">
-                <canvas id="tetrisCanvas" width="200" height="400" class="tetris-canvas"></canvas>
+                <canvas id="blocksCanvas" width="200" height="400" class="blocks-canvas"></canvas>
             </div>
             <div class="gameboy-info">
-                <div>SCORE: <span id="tetrisScore">0</span></div>
-                <div>LEVEL: <span id="tetrisLevel">1</span></div>
+                <div>SCORE: <span id="blocksScore">0</span></div>
+                <div>LEVEL: <span id="blocksLevel">1</span></div>
             </div>
             <div class="gameboy-controls">
                 ← → Move | ↑ Rotate | ↓ Drop<br>
@@ -569,6 +894,19 @@
     </div>
 
     <!-- Firebase SDK -->
+    <footer style="text-align: center; padding: 40px 20px; color: #fff; opacity: 0.8;">
+        <p style="margin: 10px 0;">Made with ❤️ for easy carpooling</p>
+        <p style="margin: 10px 0;">
+            <a href="privacy-policy.html" style="color: #fff; text-decoration: underline;">Privacy Policy</a>
+        </p>
+    </footer>
+
+    <!-- Undo Snackbar -->
+    <div class="snackbar" id="snackbar">
+        <div class="snackbar-message" id="snackbarMessage"></div>
+        <button class="snackbar-action" onclick="undoAction()">UNDO</button>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -587,7 +925,32 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const dbRef = database.ref('carpoolData');
+
+        // Get or create event ID from URL parameter
+        let eventId = null;
+        let dbRef = null;
+
+        function getOrCreateEventId() {
+            const params = new URLSearchParams(window.location.search);
+            const urlEventId = params.get('e');
+
+            if (urlEventId) {
+                // Joining existing event
+                console.log('Joining event:', urlEventId);
+                return urlEventId;
+            } else {
+                // Create new event
+                const newEventId = self.crypto.randomUUID();
+                console.log('Created new event:', newEventId);
+                // Update URL without reload
+                const newUrl = `${window.location.pathname}?e=${newEventId}`;
+                window.history.pushState({}, '', newUrl);
+                return newEventId;
+            }
+        }
+
+        eventId = getOrCreateEventId();
+        dbRef = database.ref(`events/${eventId}`);
 
         let cars = [];
         let unassignedPassengers = [];
@@ -597,6 +960,186 @@
         // Security: Rate limiting to prevent spam
         let lastActionTime = 0;
         const ACTION_COOLDOWN = 500; // 500ms between actions
+
+        // Debounce timer for event name input
+        let eventNameDebounceTimer = null;
+
+        // LocalStorage helper functions for name persistence
+        function saveMyName(name) {
+            try {
+                localStorage.setItem('carpoolMyName', name);
+            } catch(e) {
+                console.log('Could not save name to localStorage:', e);
+            }
+        }
+
+        function loadMyName() {
+            try {
+                return localStorage.getItem('carpoolMyName') || '';
+            } catch(e) {
+                console.log('Could not load name from localStorage:', e);
+                return '';
+            }
+        }
+
+        // Undo functionality
+        let lastAction = null;
+        let snackbarTimeout = null;
+
+        function showSnackbar(message, actionData) {
+            // Clear any existing timeout
+            if (snackbarTimeout) {
+                clearTimeout(snackbarTimeout);
+            }
+
+            // Store the action data for undo
+            lastAction = actionData;
+
+            // Show the snackbar
+            const snackbar = document.getElementById('snackbar');
+            const snackbarMessage = document.getElementById('snackbarMessage');
+            snackbarMessage.textContent = message;
+            snackbar.classList.add('show');
+
+            // Auto-hide after 5 seconds
+            snackbarTimeout = setTimeout(() => {
+                hideSnackbar();
+            }, 5000);
+        }
+
+        function hideSnackbar() {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.classList.remove('show');
+            if (snackbarTimeout) {
+                clearTimeout(snackbarTimeout);
+                snackbarTimeout = null;
+            }
+            // Clear the action after hiding
+            setTimeout(() => {
+                lastAction = null;
+            }, 300);
+        }
+
+        function undoAction() {
+            if (!lastAction) return;
+
+            const action = lastAction;
+            hideSnackbar();
+
+            // Perform the undo based on action type
+            if (action.type === 'assign') {
+                // Undo assign: move passenger back to unassigned
+                const car = cars.find(c => c.id === action.carId);
+                if (car) {
+                    const passengerIndex = car.passengers.findIndex(p => p.id === action.passengerId);
+                    if (passengerIndex !== -1) {
+                        const passenger = car.passengers[passengerIndex];
+                        car.passengers.splice(passengerIndex, 1);
+                        unassignedPassengers.push(passenger);
+                        renderCars();
+                        renderUnassigned();
+                        autoSave();
+                    }
+                }
+            } else if (action.type === 'unassign') {
+                // Undo unassign: move passenger back to car
+                const passenger = unassignedPassengers.find(p => p.id === action.passengerId);
+                const car = cars.find(c => c.id === action.carId);
+                if (passenger && car) {
+                    const passengerIndex = unassignedPassengers.findIndex(p => p.id === action.passengerId);
+                    unassignedPassengers.splice(passengerIndex, 1);
+                    car.passengers.push(passenger);
+                    renderCars();
+                    renderUnassigned();
+                    autoSave();
+                }
+            } else if (action.type === 'deletePassenger') {
+                // Undo delete: add passenger back to unassigned
+                unassignedPassengers.push({
+                    id: action.passengerId,
+                    name: action.passengerName
+                });
+                renderUnassigned();
+                autoSave();
+            } else if (action.type === 'deleteFromCar') {
+                // Undo delete from car: add passenger back to the car
+                const car = cars.find(c => c.id === action.carId);
+                if (car) {
+                    car.passengers.push({
+                        id: action.passengerId,
+                        name: action.passengerName
+                    });
+                    renderCars();
+                    autoSave();
+                }
+            }
+
+            lastAction = null;
+        }
+
+        // Drag and Drop handlers
+        let draggedPassengerId = null;
+
+        function handleDragStart(e) {
+            const passengerId = parseInt(e.target.dataset.passengerId);
+            draggedPassengerId = passengerId;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            // Remove drag-over class from all car cards
+            document.querySelectorAll('.car-card').forEach(card => {
+                card.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary to allow drop
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            // Add visual feedback
+            const carCard = e.currentTarget;
+            if (!carCard.classList.contains('drag-over')) {
+                carCard.classList.add('drag-over');
+            }
+
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            // Only remove drag-over if we're leaving the car card entirely
+            const carCard = e.currentTarget;
+            if (!carCard.contains(e.relatedTarget)) {
+                carCard.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation(); // Stop event bubbling
+            }
+            e.preventDefault();
+
+            const carCard = e.currentTarget;
+            carCard.classList.remove('drag-over');
+
+            // Find the car ID from the onclick attribute
+            const onclickAttr = carCard.getAttribute('onclick');
+            const carIdMatch = onclickAttr.match(/handleCarClick\(event, (\d+)\)/);
+
+            if (carIdMatch && draggedPassengerId) {
+                const carId = parseInt(carIdMatch[1]);
+                assignPassenger(draggedPassengerId, carId);
+            }
+
+            draggedPassengerId = null;
+            return false;
+        }
 
         function isRateLimited() {
             const now = Date.now();
@@ -646,14 +1189,16 @@
                 ? sanitizeInput(eventName.substring(0, 100))
                 : sanitizeInput(eventName);
 
-            const data = {
-                eventName: sanitizedEventName,
-                cars: cars,
-                unassignedPassengers: unassignedPassengers
-            };
+            // Use transactions to update specific fields atomically
+            // This prevents overwriting teammates' concurrent edits
+            const updates = {};
+            updates[`events/${eventId}/eventName`] = sanitizedEventName;
+            updates[`events/${eventId}/cars`] = cars;
+            updates[`events/${eventId}/unassignedPassengers`] = unassignedPassengers;
+            updates[`events/${eventId}/lastUpdated`] = firebase.database.ServerValue.TIMESTAMP;
 
-            // Save to Firebase
-            dbRef.set(data).then(() => {
+            // Use update() instead of set() to avoid overwriting entire object
+            database.ref().update(updates).then(() => {
                 console.log('Saved to Firebase!');
                 setTimeout(() => {
                     isSaving = false;
@@ -685,6 +1230,9 @@
             // Security: Sanitize driver name before storing
             const sanitizedName = sanitizeInput(driverName);
 
+            // Save name to localStorage for persistence
+            saveMyName(sanitizedName);
+
             cars.push({
                 id: Date.now(),
                 driver: sanitizedName,
@@ -714,6 +1262,9 @@
             // Security: Sanitize friend name before storing
             const sanitizedName = sanitizeInput(passengerName);
 
+            // Save name to localStorage for persistence
+            saveMyName(sanitizedName);
+
             unassignedPassengers.push({
                 id: Date.now(),
                 name: sanitizedName
@@ -741,6 +1292,13 @@
             renderCars();
             renderUnassigned();
             autoSave();
+
+            // Show undo snackbar
+            showSnackbar(`${passenger.name} assigned to ${car.driver}'s car`, {
+                type: 'assign',
+                passengerId: passenger.id,
+                carId: car.id
+            });
         }
 
         function removePassengerFromCar(carId, passengerId) {
@@ -755,6 +1313,13 @@
             renderCars();
             renderUnassigned();
             autoSave();
+
+            // Show undo snackbar
+            showSnackbar(`${passenger.name} removed from ${car.driver}'s car`, {
+                type: 'unassign',
+                passengerId: passenger.id,
+                carId: car.id
+            });
         }
 
         function deleteCar(carId) {
@@ -805,16 +1370,22 @@
                     car.passengers = [];
                 }
                 const isFull = car.passengers.length >= car.seats;
+                const seatsLeft = car.seats - car.passengers.length;
+                const seatPercentage = (car.passengers.length / car.seats) * 100;
                 return `
                     <div class="car-card ${isFull ? 'full' : ''}" onclick="handleCarClick(event, ${car.id})">
                         <button class="delete-car" onclick="event.stopPropagation(); deleteCar(${car.id})">×</button>
+                        ${!isFull && seatsLeft <= 2 ? `<div class="seat-badge warning">${seatsLeft} seat${seatsLeft !== 1 ? 's' : ''} left</div>` : ''}
+                        ${isFull ? '<div class="seat-badge full">FULL</div>' : ''}
                         <div class="car-visual">${car.emoji}</div>
                         <div class="car-info">
                             Driver: ${car.driver}
                         </div>
                         <div class="seats-info">
                             ${car.passengers.length} / <span class="editable-seats" onclick="event.stopPropagation(); editSeats(${car.id})">${car.seats}</span> seats filled
-                            ${isFull ? '(FULL!)' : ''}
+                        </div>
+                        <div class="seat-meter">
+                            <div class="seat-meter-fill" style="width: ${seatPercentage}%"></div>
                         </div>
                         <div class="passengers-list">
                             ${car.passengers.map(p => `
@@ -827,12 +1398,29 @@
                     </div>
                 `;
             }).join('');
+
+            // Add drag-and-drop event listeners to car cards
+            container.querySelectorAll('.car-card').forEach(carCard => {
+                carCard.addEventListener('dragover', handleDragOver);
+                carCard.addEventListener('dragleave', handleDragLeave);
+                carCard.addEventListener('drop', handleDrop);
+            });
         }
 
         function removeUnassignedFriend(passengerId) {
+            const passenger = unassignedPassengers.find(p => p.id === passengerId);
+            if (!passenger) return;
+
             unassignedPassengers = unassignedPassengers.filter(p => p.id !== passengerId);
             renderUnassigned();
             autoSave();
+
+            // Show undo snackbar
+            showSnackbar(`${passenger.name} removed`, {
+                type: 'deletePassenger',
+                passengerId: passenger.id,
+                passengerName: passenger.name
+            });
         }
 
         function renderUnassigned() {
@@ -844,18 +1432,23 @@
             }
 
             container.innerHTML = unassignedPassengers.map(p => `
-                <div class="unassigned-tag" data-passenger-id="${p.id}">
+                <div class="unassigned-tag" data-passenger-id="${p.id}" draggable="true">
                     ${p.name}
                     <span class="remove" onclick="event.stopPropagation(); removeUnassignedFriend(${p.id})">×</span>
                 </div>
             `).join('');
 
-            // Add click handlers for drag-to-assign
+            // Add click and drag handlers
             container.querySelectorAll('.unassigned-tag').forEach(tag => {
+                // Click handler for mobile
                 tag.addEventListener('click', function() {
                     const passengerId = parseInt(this.dataset.passengerId);
                     selectPassengerForAssignment(passengerId);
                 });
+
+                // Drag handlers for desktop
+                tag.addEventListener('dragstart', handleDragStart);
+                tag.addEventListener('dragend', handleDragEnd);
             });
         }
 
@@ -890,8 +1483,39 @@
         }
 
         // Clear everything function
+        function shareEvent() {
+            const shareUrl = window.location.href;
+
+            // Try native share API first (mobile)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Join my carpool event!',
+                    text: 'Click this link to join and edit our carpool plan',
+                    url: shareUrl
+                }).then(() => {
+                    console.log('Shared successfully');
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackCopyLink(shareUrl);
+                });
+            } else {
+                // Fallback: copy to clipboard
+                fallbackCopyLink(shareUrl);
+            }
+        }
+
+        function fallbackCopyLink(url) {
+            // Copy to clipboard
+            navigator.clipboard.writeText(url).then(() => {
+                alert('🔗 Link copied to clipboard!\n\nShare this link with your group so they can join and edit together:\n\n' + url);
+            }).catch(err => {
+                // Ultra-fallback: show in alert
+                alert('Share this link with your group:\n\n' + url);
+            });
+        }
+
         function clearEverything() {
-            if (confirm('Going to clear everything now.')) {
+            if (confirm('⚠️ This will clear ALL data for this event. Everyone will lose access. Are you sure?')) {
                 // Clear local data
                 cars = [];
                 unassignedPassengers = [];
@@ -909,6 +1533,167 @@
                 renderUnassigned();
 
                 alert('Everything cleared! 🧹');
+            }
+        }
+
+        // Show/hide cost section when cars exist
+        function updateCostSectionVisibility() {
+            const costSection = document.getElementById('costSection');
+            if (cars.length > 0 && cars.some(car => car.passengers && car.passengers.length > 0)) {
+                costSection.style.display = 'block';
+            } else {
+                costSection.style.display = 'none';
+            }
+        }
+
+        // Calculate trip costs
+        function calculateCosts() {
+            const miles = parseFloat(document.getElementById('totalMiles').value) || 0;
+            const gasPrice = parseFloat(document.getElementById('gasPrice').value) || 0;
+            const mpg = parseFloat(document.getElementById('mpg').value) || 25;
+            const tolls = parseFloat(document.getElementById('tolls').value) || 0;
+            const driverPaysZero = document.getElementById('driverPaysZero').checked;
+
+            if (miles === 0 || gasPrice === 0) {
+                alert('Please enter total miles and gas price!');
+                return;
+            }
+
+            // Calculate total gas cost
+            const gasCost = (miles / mpg) * gasPrice;
+            const totalCost = gasCost + tolls;
+
+            // Build breakdown per car
+            const breakdown = [];
+            let totalPassengers = 0;
+
+            cars.forEach(car => {
+                if (!car.passengers || car.passengers.length === 0) return;
+
+                const carPassengers = car.passengers.length;
+                const totalInCar = driverPaysZero ? carPassengers : carPassengers + 1;
+                const costPerPerson = totalCost / totalInCar;
+
+                totalPassengers += carPassengers;
+
+                breakdown.push({
+                    driver: car.driver,
+                    passengers: car.passengers,
+                    costPerPerson: costPerPerson,
+                    driverPays: driverPaysZero ? 0 : costPerPerson
+                });
+            });
+
+            // Display results
+            displayCostBreakdown(totalCost, gasCost, tolls, breakdown, driverPaysZero);
+        }
+
+        function displayCostBreakdown(total, gas, tolls, breakdown, driverPaysZero) {
+            const resultsDiv = document.getElementById('costResults');
+            const breakdownDiv = document.getElementById('costBreakdown');
+
+            let html = `
+                <div class="cost-item">
+                    <strong>Total Trip Cost:</strong>
+                    <span class="amount">$${total.toFixed(2)}</span>
+                </div>
+                <div class="cost-item" style="font-size: 0.9em; color: #666;">
+                    <span>Gas: $${gas.toFixed(2)}</span>
+                    <span>Tolls/Parking: $${tolls.toFixed(2)}</span>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 2px dashed #ddd;">
+            `;
+
+            breakdown.forEach(car => {
+                html += `
+                    <div class="cost-item" style="background: #e8f4f8;">
+                        <strong>🚗 ${car.driver}'s Car</strong>
+                    </div>
+                `;
+
+                car.passengers.forEach(passenger => {
+                    html += `
+                        <div class="cost-item">
+                            <span>${passenger.name}</span>
+                            <span class="amount">$${car.costPerPerson.toFixed(2)}</span>
+                        </div>
+                    `;
+                });
+
+                if (car.driverPays > 0) {
+                    html += `
+                        <div class="cost-item">
+                            <span>${car.driver} (Driver)</span>
+                            <span class="amount">$${car.driverPays.toFixed(2)}</span>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="cost-item" style="font-size: 0.85em; color: #666;">
+                            <span>${car.driver} (Driver)</span>
+                            <span>$0.00 ✨</span>
+                        </div>
+                    `;
+                }
+            });
+
+            breakdownDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+
+            // Show payment links for first driver (simplification)
+            if (breakdown.length > 0) {
+                displayPaymentLinks(breakdown[0]);
+            }
+        }
+
+        function displayPaymentLinks(carBreakdown) {
+            const linksDiv = document.getElementById('paymentLinks');
+            const buttonsDiv = document.getElementById('paymentButtons');
+
+            if (carBreakdown.passengers.length === 0) {
+                linksDiv.style.display = 'none';
+                return;
+            }
+
+            const amount = carBreakdown.costPerPerson.toFixed(2);
+            const driverName = carBreakdown.driver;
+            const note = encodeURIComponent(`Carpool - ${driverName}'s car`);
+
+            buttonsDiv.innerHTML = `
+                <a href="venmo://paycharge?recipients=${encodeURIComponent(driverName)}&amount=${amount}&note=${note}"
+                   class="payment-btn venmo" target="_blank">
+                    💙 Venmo
+                </a>
+                <a href="https://paypal.me/${encodeURIComponent(driverName)}/${amount}"
+                   class="payment-btn paypal" target="_blank">
+                    💰 PayPal
+                </a>
+                <a href="https://cash.app/$${encodeURIComponent(driverName)}/${amount}"
+                   class="payment-btn cashapp" target="_blank">
+                    💵 Cash App
+                </a>
+            `;
+
+            linksDiv.style.display = 'block';
+        }
+
+        function shareCosts() {
+            const breakdownDiv = document.getElementById('costBreakdown');
+            const text = breakdownDiv.innerText;
+
+            // Try native share API
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Carpool Cost Split',
+                    text: text
+                }).catch(err => console.log('Share cancelled'));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('💰 Cost breakdown copied to clipboard!');
+                }).catch(err => {
+                    alert('Cost breakdown:\n\n' + text);
+                });
             }
         }
 
@@ -946,8 +1731,13 @@
             });
         }
 
-        // Add auto-save to event name input
-        document.getElementById('eventName').addEventListener('input', autoSave);
+        // Add auto-save to event name input with 300ms debounce
+        document.getElementById('eventName').addEventListener('input', () => {
+            clearTimeout(eventNameDebounceTimer);
+            eventNameDebounceTimer = setTimeout(() => {
+                autoSave();
+            }, 300);
+        });
 
         // Allow Enter key to submit
         document.getElementById('driverName').addEventListener('keypress', function(e) {
@@ -963,6 +1753,13 @@
         // Load saved data on page load
         loadData();
 
+        // Pre-fill name inputs with saved name from localStorage
+        const savedName = loadMyName();
+        if (savedName) {
+            document.getElementById('driverName').value = savedName;
+            document.getElementById('passengerName').value = savedName;
+        }
+
         // Initial render
         renderCars();
         renderUnassigned();
@@ -974,10 +1771,10 @@
         let xSpeed = 2;
         let ySpeed = 2;
 
-        // TETRIS Easter Egg - Click cookie 6 times to spell TETRIS
+        // BLOCKS Easter Egg - Click cookie 6 times to spell BLOCKS
         let cookieClickCount = 0;
-        const tetrisLetters = ['T', 'E', 'T', 'R', 'I', 'S'];
-        const tetrisRevealDiv = document.getElementById('tetrisReveal');
+        const blocksLetters = ['B', 'L', 'O', 'C', 'K', 'S'];
+        const blocksRevealDiv = document.getElementById('blocksReveal');
         let cookieResetTimer = null;
 
         cookie.addEventListener('click', function(e) {
@@ -998,33 +1795,33 @@
             clearTimeout(cookieResetTimer);
             cookieResetTimer = setTimeout(() => {
                 cookieClickCount = 0;
-                tetrisRevealDiv.textContent = '';
+                blocksRevealDiv.textContent = '';
             }, 5000);
 
             if (cookieClickCount <= 6) {
-                // Build up TETRIS letter by letter
-                const currentWord = tetrisLetters.slice(0, cookieClickCount).join('');
-                tetrisRevealDiv.textContent = currentWord;
+                // Build up BLOCKS letter by letter
+                const currentWord = blocksLetters.slice(0, cookieClickCount).join('');
+                blocksRevealDiv.textContent = currentWord;
 
                 if (cookieClickCount === 6) {
-                    // Spell complete! Launch Tetris
+                    // Spell complete! Launch BLOCKS
                     clearTimeout(cookieResetTimer);
 
                     // Start music immediately on 6th click (iOS needs direct user gesture)
                     if (audioContext) {
                         if (audioContext.state === 'suspended') {
                             audioContext.resume().then(() => {
-                                playTetrisMusic();
+                                playBlocksMusic();
                             });
                         } else {
-                            playTetrisMusic();
+                            playBlocksMusic();
                         }
                     }
 
                     setTimeout(() => {
-                        tetrisRevealDiv.textContent = '';
+                        blocksRevealDiv.textContent = '';
                         cookieClickCount = 0;
-                        openTetris();
+                        openBlocks();
                     }, 500);
                 }
             }
@@ -1053,7 +1850,7 @@
         moveCookie();
 
         // ============================================
-        // TETRIS EASTER EGG - GAME BOY STYLE
+        // BLOCKS EASTER EGG - GAME BOY STYLE
         // ============================================
 
         const COLS = 10;
@@ -1061,18 +1858,18 @@
         const BLOCK_SIZE = 20;
         const COLORS = ['#0f380f', '#306230', '#0f380f', '#8bac0f', '#9bbc0f'];
 
-        let tetrisCanvas, tetrisCtx;
-        let tetrisBoard = [];
+        let blocksCanvas, blocksCtx;
+        let blocksBoard = [];
         let currentPiece = null;
-        let tetrisScore = 0;
-        let tetrisLevel = 1;
-        let tetrisGameRunning = false;
-        let tetrisGameLoop = null;
-        let tetrisPaused = false;
-        let tetrisDropCounter = 0;
-        let tetrisDropInterval = 1000;
+        let blocksScore = 0;
+        let blocksLevel = 1;
+        let blocksGameRunning = false;
+        let blocksGameLoop = null;
+        let blocksPaused = false;
+        let blocksDropCounter = 0;
+        let blocksDropInterval = 1000;
 
-        // Tetris pieces (tetrominoes)
+        // BLOCKS pieces (tetrominoes)
         const PIECES = {
             I: [[1,1,1,1]],
             O: [[1,1],[1,1]],
@@ -1083,16 +1880,16 @@
             L: [[0,0,1],[1,1,1]]
         };
 
-        function initTetris() {
-            tetrisCanvas = document.getElementById('tetrisCanvas');
-            tetrisCtx = tetrisCanvas.getContext('2d');
+        function initBlocks() {
+            blocksCanvas = document.getElementById('blocksCanvas');
+            blocksCtx = blocksCanvas.getContext('2d');
 
             // Initialize board
-            tetrisBoard = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+            blocksBoard = Array(ROWS).fill().map(() => Array(COLS).fill(0));
 
-            tetrisScore = 0;
-            tetrisLevel = 1;
-            updateTetrisUI();
+            blocksScore = 0;
+            blocksLevel = 1;
+            updateBlocksUI();
 
             spawnPiece();
 
@@ -1111,9 +1908,9 @@
 
             if (collision(currentPiece.x, currentPiece.y, currentPiece.shape)) {
                 // Game over
-                tetrisGameRunning = false;
-                alert('Game Over! Score: ' + tetrisScore);
-                closeTetris();
+                blocksGameRunning = false;
+                alert('Game Over! Score: ' + blocksScore);
+                closeBlocks();
             }
         }
 
@@ -1124,7 +1921,7 @@
                         (y + row >= ROWS ||
                          x + col < 0 ||
                          x + col >= COLS ||
-                         tetrisBoard[y + row] && tetrisBoard[y + row][x + col])) {
+                         blocksBoard[y + row] && blocksBoard[y + row][x + col])) {
                         return true;
                     }
                 }
@@ -1136,7 +1933,7 @@
             currentPiece.shape.forEach((row, y) => {
                 row.forEach((value, x) => {
                     if (value) {
-                        tetrisBoard[currentPiece.y + y][currentPiece.x + x] = currentPiece.color;
+                        blocksBoard[currentPiece.y + y][currentPiece.x + x] = currentPiece.color;
                     }
                 });
             });
@@ -1152,18 +1949,18 @@
         function clearLines() {
             let linesCleared = 0;
             for (let row = ROWS - 1; row >= 0; row--) {
-                if (tetrisBoard[row].every(cell => cell !== 0)) {
-                    tetrisBoard.splice(row, 1);
-                    tetrisBoard.unshift(Array(COLS).fill(0));
+                if (blocksBoard[row].every(cell => cell !== 0)) {
+                    blocksBoard.splice(row, 1);
+                    blocksBoard.unshift(Array(COLS).fill(0));
                     linesCleared++;
                     row++; // Check same row again
                 }
             }
             if (linesCleared > 0) {
-                tetrisScore += linesCleared * 100 * tetrisLevel;
-                tetrisLevel = Math.floor(tetrisScore / 1000) + 1;
-                tetrisDropInterval = Math.max(100, 1000 - (tetrisLevel * 100));
-                updateTetrisUI();
+                blocksScore += linesCleared * 100 * blocksLevel;
+                blocksLevel = Math.floor(blocksScore / 1000) + 1;
+                blocksDropInterval = Math.max(100, 1000 - (blocksLevel * 100));
+                updateBlocksUI();
             }
         }
 
@@ -1182,7 +1979,7 @@
                 clearLines();
                 spawnPiece();
             }
-            tetrisDropCounter = 0;
+            blocksDropCounter = 0;
         }
 
         function hardDrop() {
@@ -1201,13 +1998,13 @@
             }
         }
 
-        function drawTetris() {
+        function drawBlocks() {
             // Clear canvas with Game Boy green
-            tetrisCtx.fillStyle = '#0f380f';
-            tetrisCtx.fillRect(0, 0, tetrisCanvas.width, tetrisCanvas.height);
+            blocksCtx.fillStyle = '#0f380f';
+            blocksCtx.fillRect(0, 0, blocksCanvas.width, blocksCanvas.height);
 
             // Draw board
-            tetrisBoard.forEach((row, y) => {
+            blocksBoard.forEach((row, y) => {
                 row.forEach((cell, x) => {
                     if (cell) {
                         drawBlock(x, y, '#8bac0f');
@@ -1228,43 +2025,43 @@
         }
 
         function drawBlock(x, y, color) {
-            tetrisCtx.fillStyle = color;
-            tetrisCtx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
-            tetrisCtx.strokeStyle = '#306230';
-            tetrisCtx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+            blocksCtx.fillStyle = color;
+            blocksCtx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+            blocksCtx.strokeStyle = '#306230';
+            blocksCtx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
         }
 
-        function updateTetrisUI() {
-            document.getElementById('tetrisScore').textContent = tetrisScore;
-            document.getElementById('tetrisLevel').textContent = tetrisLevel;
+        function updateBlocksUI() {
+            document.getElementById('blocksScore').textContent = blocksScore;
+            document.getElementById('blocksLevel').textContent = blocksLevel;
         }
 
-        function tetrisUpdate(deltaTime) {
-            if (!tetrisGameRunning || tetrisPaused) return;
+        function blocksUpdate(deltaTime) {
+            if (!blocksGameRunning || blocksPaused) return;
 
-            tetrisDropCounter += deltaTime;
-            if (tetrisDropCounter > tetrisDropInterval) {
+            blocksDropCounter += deltaTime;
+            if (blocksDropCounter > blocksDropInterval) {
                 dropPiece();
             }
 
-            drawTetris();
+            drawBlocks();
         }
 
-        let lastTetrisTime = 0;
-        function tetrisLoop(time = 0) {
-            const deltaTime = time - lastTetrisTime;
-            lastTetrisTime = time;
+        let lastBlocksTime = 0;
+        function blocksLoop(time = 0) {
+            const deltaTime = time - lastBlocksTime;
+            lastBlocksTime = time;
 
-            tetrisUpdate(deltaTime);
+            blocksUpdate(deltaTime);
 
-            if (tetrisGameRunning) {
-                tetrisGameLoop = requestAnimationFrame(tetrisLoop);
+            if (blocksGameRunning) {
+                blocksGameLoop = requestAnimationFrame(blocksLoop);
             }
         }
 
-        // Tetris controls
+        // BLOCKS controls
         document.addEventListener('keydown', (e) => {
-            if (!tetrisGameRunning) return;
+            if (!blocksGameRunning) return;
 
             switch(e.key) {
                 case 'ArrowLeft':
@@ -1280,35 +2077,35 @@
                     rotatePiece();
                     break;
                 case ' ':
-                    tetrisPaused = !tetrisPaused;
+                    blocksPaused = !blocksPaused;
                     break;
             }
         });
 
-        function openTetris() {
-            document.getElementById('tetrisOverlay').classList.add('active');
+        function openBlocks() {
+            document.getElementById('blocksOverlay').classList.add('active');
             document.getElementById('mobileControls').classList.add('active');
-            tetrisGameRunning = true;
-            initTetris();
-            tetrisLoop();
+            blocksGameRunning = true;
+            initBlocks();
+            blocksLoop();
 
             // Music should already be playing from cookie click
             // But try to start if it somehow didn't
             if (!musicStarted && audioContext) {
-                playTetrisMusic();
+                playBlocksMusic();
             }
         }
 
-        function closeTetris() {
-            document.getElementById('tetrisOverlay').classList.remove('active');
+        function closeBlocks() {
+            document.getElementById('blocksOverlay').classList.remove('active');
             document.getElementById('mobileControls').classList.remove('active');
             document.getElementById('musicPrompt').classList.remove('show');
-            tetrisGameRunning = false;
+            blocksGameRunning = false;
             musicStarted = false;
-            if (tetrisGameLoop) {
-                cancelAnimationFrame(tetrisGameLoop);
+            if (blocksGameLoop) {
+                cancelAnimationFrame(blocksGameLoop);
             }
-            stopTetrisMusic();
+            stopBlocksMusic();
         }
 
         // Mobile touch controls - also resume audio on first touch (iOS fix)
@@ -1321,17 +2118,17 @@
                     if (audioContext.state === 'suspended') {
                         audioContext.resume().then(() => {
                             if (!isMusicPlaying) {
-                                playTetrisMusic();
+                                playBlocksMusic();
                                 document.getElementById('musicPrompt').classList.remove('show');
                             }
                         });
                     } else if (!isMusicPlaying) {
-                        playTetrisMusic();
+                        playBlocksMusic();
                         document.getElementById('musicPrompt').classList.remove('show');
                     }
                 }
 
-                if (tetrisGameRunning) callback();
+                if (blocksGameRunning) callback();
             };
         }
 
@@ -1340,13 +2137,13 @@
         document.getElementById('btnDown').addEventListener('touchstart', handleTouchControl(() => dropPiece()));
         document.getElementById('btnRotate').addEventListener('touchstart', handleTouchControl(() => rotatePiece()));
 
-        // Tetris Music using Web Audio API
+        // BLOCKS Music using Web Audio API
         let audioContext;
         let musicGainNode;
         let isMusicPlaying = false;
         let musicStarted = false;
 
-        function playTetrisMusic() {
+        function playBlocksMusic() {
             if (isMusicPlaying) return;
 
             try {
@@ -1370,9 +2167,12 @@
         function startMusic() {
             if (isMusicPlaying) return;
 
-            musicGainNode = audioContext.createGain();
-            musicGainNode.gain.value = 0.08; // Lower volume for mobile
-            musicGainNode.connect(audioContext.destination);
+            // Only create gain node if it doesn't exist
+            if (!musicGainNode) {
+                musicGainNode = audioContext.createGain();
+                musicGainNode.gain.value = 0.08; // Lower volume for mobile
+                musicGainNode.connect(audioContext.destination);
+            }
 
             isMusicPlaying = true;
             musicStarted = true;
@@ -1380,65 +2180,72 @@
             // Hide the music prompt
             document.getElementById('musicPrompt').classList.remove('show');
 
-            playTetrisTheme();
-            console.log('Tetris music started!');
+            playBlocksTheme();
+            console.log('BLOCKS music started!');
         }
 
-        function stopTetrisMusic() {
+        function stopBlocksMusic() {
             isMusicPlaying = false;
-            if (audioContext && audioContext.state !== 'closed') {
-                audioContext.close().then(() => {
-                    audioContext = null;
-                });
+            if (audioContext && audioContext.state === 'running') {
+                audioContext.suspend();
             }
         }
 
-        // Extended Tetris theme (Korobeiniki)
-        function playTetrisTheme() {
+        // Für Elise (Beethoven) - FROM SHEET MUSIC!
+        function playBlocksTheme() {
             if (!isMusicPlaying) return;
 
             const notes = [
-                // Part 1
-                {freq: 659.25, duration: 0.4}, // E
-                {freq: 493.88, duration: 0.2}, // B
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 587.33, duration: 0.4}, // D
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 493.88, duration: 0.2}, // B
-                {freq: 440.00, duration: 0.4}, // A
-                {freq: 440.00, duration: 0.2}, // A
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 659.25, duration: 0.4}, // E
-                {freq: 587.33, duration: 0.2}, // D
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 493.88, duration: 0.6}, // B
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 587.33, duration: 0.4}, // D
-                {freq: 659.25, duration: 0.4}, // E
-                {freq: 523.25, duration: 0.4}, // C
-                {freq: 440.00, duration: 0.4}, // A
-                {freq: 440.00, duration: 0.4}, // A
-                {freq: 0, duration: 0.2}, // Rest
-                // Part 2
-                {freq: 587.33, duration: 0.4}, // D
-                {freq: 698.46, duration: 0.2}, // F
-                {freq: 880.00, duration: 0.4}, // A
-                {freq: 783.99, duration: 0.2}, // G
-                {freq: 698.46, duration: 0.2}, // F
-                {freq: 659.25, duration: 0.6}, // E
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 659.25, duration: 0.4}, // E
-                {freq: 587.33, duration: 0.2}, // D
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 493.88, duration: 0.4}, // B
-                {freq: 493.88, duration: 0.2}, // B
-                {freq: 523.25, duration: 0.2}, // C
-                {freq: 587.33, duration: 0.4}, // D
-                {freq: 659.25, duration: 0.4}, // E
-                {freq: 523.25, duration: 0.4}, // C
-                {freq: 440.00, duration: 0.4}, // A
-                {freq: 440.00, duration: 0.4}, // A
-                {freq: 0, duration: 0.2} // Rest
+                // Measure 1-2: THE iconic opening! (A minor, Poco moto)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5 (Eb)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5 (Eb)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 493.88, duration: 0.15}, // B4
+                {freq: 587.33, duration: 0.15}, // D5
+                {freq: 523.25, duration: 0.15}, // C5
+                {freq: 440.00, duration: 0.35}, // A4 (held)
+
+                // Measure 3-4: Response phrase
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 261.63, duration: 0.1}, // C4 (bass note)
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 440.00, duration: 0.1}, // A4
+                {freq: 493.88, duration: 0.35}, // B4 (held)
+
+                // Measure 5: Continuation
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 329.63, duration: 0.1}, // E4 (bass)
+                {freq: 415.30, duration: 0.1}, // G#4
+                {freq: 493.88, duration: 0.1}, // B4
+                {freq: 523.25, duration: 0.35}, // C5 (held)
+
+                // Measure 6-10 (Second ending): Repeat opening with variation
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 493.88, duration: 0.15}, // B4
+                {freq: 587.33, duration: 0.15}, // D5
+                {freq: 523.25, duration: 0.15}, // C5
+                {freq: 440.00, duration: 0.35}, // A4 (held)
+
+                // Final resolution
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 261.63, duration: 0.1}, // C4
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 440.00, duration: 0.1}, // A4
+                {freq: 493.88, duration: 0.35}, // B4 (held)
+
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 523.25, duration: 0.1}, // C5
+                {freq: 493.88, duration: 0.1}, // B4
+                {freq: 440.00, duration: 0.5}, // A4 (final, held longer)
+                {freq: 0, duration: 0.3} // Rest before loop
             ];
 
             let time = audioContext.currentTime;
@@ -1454,7 +2261,7 @@
 
             // Loop the music
             setTimeout(() => {
-                if (isMusicPlaying) playTetrisTheme();
+                if (isMusicPlaying) playBlocksTheme();
             }, time * 1000 - audioContext.currentTime * 1000);
         }
 
@@ -1466,9 +2273,9 @@
                 tPressCount++;
                 clearTimeout(tPressTimer);
 
-                if (tPressCount >= 3 && !tetrisGameRunning) {
+                if (tPressCount >= 3 && !blocksGameRunning) {
                     tPressCount = 0;
-                    openTetris();
+                    openBlocks();
                 } else {
                     tPressTimer = setTimeout(() => {
                         tPressCount = 0;

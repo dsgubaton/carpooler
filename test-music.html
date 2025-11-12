@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BLOCKS Music - Für Elise</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #0f380f;
+            font-family: monospace;
+            color: #9bbc0f;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            background: #9bbc0f;
+            color: #0f380f;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            font-family: monospace;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #8bac0f;
+        }
+        button:active {
+            background: #306230;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BLOCKS - Für Elise</h1>
+        <button onclick="playMusic()">▶ Play Music</button>
+        <button onclick="stopMusic()">⏹ Stop Music</button>
+    </div>
+
+    <script>
+        let audioContext;
+        let musicGainNode;
+        let isMusicPlaying = false;
+
+        function playMusic() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                musicGainNode = audioContext.createGain();
+                musicGainNode.connect(audioContext.destination);
+                musicGainNode.gain.value = 0.3;
+            }
+
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            isMusicPlaying = true;
+            playBlocksTheme();
+        }
+
+        function stopMusic() {
+            isMusicPlaying = false;
+        }
+
+        function playBlocksTheme() {
+            if (!isMusicPlaying) return;
+
+            const notes = [
+                // Measure 1-2: THE iconic opening! (A minor, Poco moto)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5 (Eb)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5 (Eb)
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 493.88, duration: 0.15}, // B4
+                {freq: 587.33, duration: 0.15}, // D5
+                {freq: 523.25, duration: 0.15}, // C5
+                {freq: 440.00, duration: 0.35}, // A4 (held)
+
+                // Measure 3-4: Response phrase
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 261.63, duration: 0.1}, // C4 (bass note)
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 440.00, duration: 0.1}, // A4
+                {freq: 493.88, duration: 0.35}, // B4 (held)
+
+                // Measure 5: Continuation
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 329.63, duration: 0.1}, // E4 (bass)
+                {freq: 415.30, duration: 0.1}, // G#4
+                {freq: 493.88, duration: 0.1}, // B4
+                {freq: 523.25, duration: 0.35}, // C5 (held)
+
+                // Measure 6-10 (Second ending): Repeat opening with variation
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 622.25, duration: 0.15}, // D#5
+                {freq: 659.25, duration: 0.15}, // E5
+                {freq: 493.88, duration: 0.15}, // B4
+                {freq: 587.33, duration: 0.15}, // D5
+                {freq: 523.25, duration: 0.15}, // C5
+                {freq: 440.00, duration: 0.35}, // A4 (held)
+
+                // Final resolution
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 261.63, duration: 0.1}, // C4
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 440.00, duration: 0.1}, // A4
+                {freq: 493.88, duration: 0.35}, // B4 (held)
+
+                {freq: 0, duration: 0.15}, // Rest
+                {freq: 329.63, duration: 0.1}, // E4
+                {freq: 523.25, duration: 0.1}, // C5
+                {freq: 493.88, duration: 0.1}, // B4
+                {freq: 440.00, duration: 0.5}, // A4 (final, held longer)
+                {freq: 0, duration: 0.3} // Rest before loop
+            ];
+
+            let time = audioContext.currentTime;
+            notes.forEach(note => {
+                const osc = audioContext.createOscillator();
+                osc.connect(musicGainNode);
+                osc.frequency.value = note.freq;
+                osc.type = 'square'; // Game Boy sound
+                osc.start(time);
+                osc.stop(time + note.duration);
+                time += note.duration;
+            });
+
+            // Loop the music
+            setTimeout(() => {
+                if (isMusicPlaying) playBlocksTheme();
+            }, time * 1000 - audioContext.currentTime * 1000);
+        }
+    </script>
+</body>
+</html>
