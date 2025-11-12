@@ -1209,6 +1209,8 @@
                 if (saveBtn) {
                     saveBtn.textContent = '❌ Save Error';
                 }
+                // Show detailed error for debugging
+                alert('Save Error: ' + error.message + '\n\nCheck that:\n1. Firebase Realtime Database is enabled\n2. Security rules are published\n3. You have internet connection');
                 isSaving = false;
             });
         }
