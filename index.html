@@ -500,8 +500,6 @@
 
         <input type="text" id="eventName" class="event-input" placeholder="Event Name (e.g., Beach Trip!)">
 
-        <button class="clear-btn" onclick="clearEverything()">🧹 Clear Everything</button>
-
         <div class="section">
             <h2>Add Car 🚗</h2>
             <div class="input-group">
@@ -526,6 +524,10 @@
             <h2>Carpool Lineup ✅</h2>
             <div class="cars-container" id="carsContainer"></div>
         </div>
+
+        <button class="save-btn" onclick="saveData()">✅ Auto Saved to Cloud</button>
+
+        <button class="clear-btn" onclick="clearEverything()">🧹 Clear Everything</button>
     </div>
 
     <div class="dancing-cookie">🍪</div>
@@ -893,6 +895,12 @@
                 assignPassenger(selectedPassengerId, carId);
                 selectedPassengerId = null;
             }
+        }
+
+        // Manual save function (auto-save happens automatically in background)
+        function saveData() {
+            autoSave();
+            alert('Saved to cloud! ☁️');
         }
 
         // Clear everything function
